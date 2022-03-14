@@ -1,0 +1,14 @@
+note over browser:
+browser creates a new note,
+adds it to the notes list
+rerenders the note list on the page
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+
+note over server:
+server creates a new note object, 
+and adds it to an array called notes
+end note
+
+server-->browser: HTTP 201 created
