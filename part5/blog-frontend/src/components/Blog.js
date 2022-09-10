@@ -31,11 +31,9 @@ const Blog = ({
   )
 
   return (
-    <div style={blogStyle}>
-      <div>
-        {blog.title} by {blog.author}
-        <button onClick={toggleDetails}>{isDetailed ? 'hide' : 'show'}</button>
-      </div>
+    <div style={blogStyle} className="blog">
+      {blog.title} by {blog.author}
+      <button onClick={toggleDetails}>{isDetailed ? 'hide' : 'show'}</button>
       { isDetailed && <Details/> }
     </div>
   )
