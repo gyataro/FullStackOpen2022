@@ -43,7 +43,7 @@ describe('when there are some blogs saved', () => {
 
     expect(response.body).toHaveLength(helper.initialBlogs.length)
   })
-  
+
   test('all blogs have the unique identifier "id"', async () => {
     const response = await api
       .get('/api/blogs')
@@ -58,60 +58,60 @@ describe('when there are some blogs saved', () => {
 describe('adding a new blog', () => {
   test('succeeds with valid data', async () => {
     const newBlog = {
-      title: "Adding a New Blog",
-      author: "New Author",
-      url: "http://www.newblog.com/newauthor",
+      title: 'Adding a New Blog',
+      author: 'New Author',
+      url: 'http://www.newblog.com/newauthor',
       likes: 5
     }
-  
+
     await api
       .post('/api/blogs')
       .set('Authorization', `Bearer ${token}`)
       .send(newBlog)
       .expect(201)
       .expect('Content-Type', /application\/json/)
-  
+
     const blogsAtEnd = await helper.blogsInDb()
     expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
-  
+
     const titles = blogsAtEnd.map(blog => blog.title)
     expect(titles).toContain(newBlog.title)
   })
-  
+
   test('succeeds without "likes", it will default to 0', async () => {
     const newBlog = {
-      title: "Adding a New Blog",
-      author: "New Author",
-      url: "http://www.newblog.com/newauthor"
+      title: 'Adding a New Blog',
+      author: 'New Author',
+      url: 'http://www.newblog.com/newauthor'
     }
-  
+
     const response = await api
       .post('/api/blogs')
       .set('Authorization', `Bearer ${token}`)
       .send(newBlog)
       .expect(201)
       .expect('Content-Type', /application\/json/)
-  
+
     expect(response.body.likes).toBe(0)
   })
-  
+
   test('without "title" or "url" will fail', async () => {
     const newBlogNoTitle = {
-      author: "New Author",
-      url: "http://www.newblog.com/newauthor"
+      author: 'New Author',
+      url: 'http://www.newblog.com/newauthor'
     }
-  
+
     const newBlogNoUrl = {
-      title: "Adding a New Blog",
-      author: "New Author"
+      title: 'Adding a New Blog',
+      author: 'New Author'
     }
-  
+
     await api
       .post('/api/blogs')
       .set('Authorization', `Bearer ${token}`)
       .send(newBlogNoTitle)
       .expect(400)
-  
+
     await api
       .post('/api/blogs')
       .set('Authorization', `Bearer ${token}`)
@@ -121,12 +121,12 @@ describe('adding a new blog', () => {
 
   test('fails without a token', async () => {
     const newBlog = {
-      title: "Adding a New Blog",
-      author: "New Author",
-      url: "http://www.newblog.com/newauthor",
+      title: 'Adding a New Blog',
+      author: 'New Author',
+      url: 'http://www.newblog.com/newauthor',
       likes: 5
     }
-  
+
     await api
       .post('/api/blogs')
       .send(newBlog)
@@ -143,10 +143,10 @@ describe('deleting a blog', () => {
       .delete(`/api/blogs/${blogToDelete.id}`)
       .set('Authorization', `Bearer ${token}`)
       .expect(204)
-  
+
     const blogsAtEnd = await helper.blogsInDb()
     expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length - 1)
-  
+
     const titles = blogsAtEnd.map(blog => blog.title)
     expect(titles).not.toContain(blogToDelete.title)
   })
@@ -154,7 +154,7 @@ describe('deleting a blog', () => {
   test('fails without a token', async () => {
     const blogsAtStart = await helper.blogsInDb()
     const blogToDelete = blogsAtStart[0]
-  
+
     await api
       .delete(`/api/blogs/${blogToDelete.id}`)
       .expect(401)
@@ -172,7 +172,7 @@ describe('updating a blog', () => {
       .set('Authorization', `Bearer ${token}`)
       .send(blogToUpdate)
       .expect(200)
-  
+
     const blogsAtEnd = await helper.blogsInDb()
     const likes = blogsAtEnd.map(blog => blog.likes)
     expect(likes).toContain(blogToUpdate.likes)

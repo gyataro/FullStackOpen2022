@@ -28,7 +28,7 @@ usersRouter.post('/', async (request, response) => {
       error: 'username must be unique'
     })
   }
-  
+
   const saltRounds = 10
   const passwordHash = await bcrypt.hash(password, saltRounds)
 
@@ -39,7 +39,7 @@ usersRouter.post('/', async (request, response) => {
   })
 
   const savedUser = await user.save()
-  
+
   response.status(201).json(savedUser)
 })
 

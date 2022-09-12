@@ -20,7 +20,7 @@ const style = {
 const Message = ({ text, type }) => {
   if(text) {
     return (
-      <div style={{ ...style['base'], ...style[type] }}>{text}</div>
+      <div style={{ ...style['base'], ...style[type] }} className="message">{text}</div>
     )
   }
 

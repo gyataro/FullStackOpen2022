@@ -10,7 +10,7 @@ blogsRouter.post('/', async (request, response) => {
   const body = request.body
   const user = request.user
 
-  if(!user) return 
+  if(!user) return
 
   const blog = new Blog({
     title: body.title,
@@ -19,7 +19,7 @@ blogsRouter.post('/', async (request, response) => {
     likes: body.likes,
     user: user._id
   })
-  
+
   const result = await blog.save()
   user.blogs = user.blogs.concat(result._id)
   await user.save()
@@ -34,7 +34,7 @@ blogsRouter.put('/:id', async(request, response) => {
   if (!blog) {
     return response.status(404).json({ error: 'blog does not exist' })
   }
-  if (blog.user.toString() != user._id.toString()) {
+  if (blog.user.toString() !== user._id.toString()) {
     return response.status(403).json({ error: 'permission denied' })
   }
 
@@ -50,7 +50,7 @@ blogsRouter.delete('/:id', async (request, response) => {
   if (!blog) {
     return response.status(404).json({ error: 'blog does not exist' })
   }
-  if (blog.user.toString() != user._id.toString()) {
+  if (blog.user.toString() !== user._id.toString()) {
     return response.status(403).json({ error: 'permission denied' })
   }
 
